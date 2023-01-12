@@ -38,8 +38,6 @@ namespace BorusanCaseAPI.Controllers
                     var dbOrder = _context.Orders.FirstOrDefault(x => x.CustomerOrderId == order.CustomerOrderId);
                     if (dbOrder != null)
                         throw new Exception("Customer order number already exists.");
-                    //return BadRequest("Customer order number already exists.");
-
 
                     var dbProduct = _context.Products.FirstOrDefault(x => x.Code == order.ProductCode);
                     if (dbProduct == null)
@@ -80,9 +78,7 @@ namespace BorusanCaseAPI.Controllers
                     OrderResultItem.Message = "Kaydetme işlemi sırasında hata: " + ex.Message;
                 }
                 orderResult.Add(OrderResultItem);
-
             }
-            
 
             return Ok(orderResult);
         }
@@ -101,7 +97,6 @@ namespace BorusanCaseAPI.Controllers
                 dbOrder.StatusId = orderStatuDto.StatusId;
                 dbOrder.UpdatedDate = orderStatuDto.ChangeDate;
 
-                //_context.Orders.Update(dbOrder);
                 await _context.SaveChangesAsync();
                 
                 orderResult.OrderId = dbOrder.Id;
@@ -116,26 +111,5 @@ namespace BorusanCaseAPI.Controllers
             return Ok(orderResult);
         }
 
-        //[HttpGet("{id}")]
-        //public async Task<ActionResult<Order>> Get(Guid id)
-        //{
-        //    var order = await _context.Orders.FindAsync(id);
-        //    if (order == null)
-        //        return BadRequest("Order not found.");
-        //    return Ok(order);
-        //}
-
-        //[HttpDelete("{id}")]
-        //public async Task<ActionResult<List<Order>>> Delete(Guid id)
-        //{
-        //    var dbOrder = await _context.Orders.FindAsync(id);
-        //    if (dbOrder == null)
-        //        return BadRequest("Order not found.");
-
-        //    _context.Orders.Remove(dbOrder);
-        //    await _context.SaveChangesAsync();
-
-        //    return Ok(await _context.Orders.ToListAsync());
-        //}
     }
 }
